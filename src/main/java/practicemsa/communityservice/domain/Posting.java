@@ -17,6 +17,8 @@ public class Posting {
 
     private String userId;
 
+    private String userName;
+
     private String title;
 
     private String content;
