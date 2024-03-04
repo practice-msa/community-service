@@ -11,7 +11,7 @@ public class Hashtag {
     @Id
     private String id;
 
-    @OneToMany(mappedBy = "hashtagPosting")
+    @OneToMany(mappedBy = "hashtag")
     private List<HashtagPosting> hashtagPostingList=new ArrayList<>();
 
 

@@ -23,22 +23,22 @@ public class Posting {
 
     private String content;
 
-    @OneToMany(mappedBy = "photo")
+    @OneToMany(mappedBy = "posting")
     private List<Photo> photoList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "video")
+    @OneToMany(mappedBy = "posting")
     private List<Video> videoList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "hashtagPosting")
+    @OneToMany(mappedBy = "posting")
     private List<HashtagPosting> hashtagPostingList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "posting")
     private List<Comment> commentList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "great")
-    private List<Great> greatList=new ArrayList<>();
+    @OneToMany(mappedBy = "posting")
+    private List<Likes> greatList=new ArrayList<>();
 
-    @OneToMany(mappedBy = "scrap")
+    @OneToMany(mappedBy = "posting")
     private List<Scrap>scrapList=new ArrayList<>();
 
     private int hits=0;

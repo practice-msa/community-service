@@ -15,5 +15,5 @@ public class Photo {
 
     @ManyToOne
     @JoinColumn
-    private Photo photo;
+    private Posting posting;
 }

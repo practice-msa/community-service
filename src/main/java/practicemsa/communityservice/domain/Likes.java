@@ -3,7 +3,7 @@ package practicemsa.communityservice.domain;
 import jakarta.persistence.*;
 
 @Entity
-public class Great {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
