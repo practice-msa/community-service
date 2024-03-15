@@ -3,12 +3,10 @@ package practicemsa.communityservice.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
-public class Photo {
+public class Photo extends File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
