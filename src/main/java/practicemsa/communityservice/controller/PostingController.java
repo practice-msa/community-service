@@ -2,6 +2,7 @@ package practicemsa.communityservice.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import practicemsa.communityservice.domain.Photo;
@@ -21,19 +22,17 @@ public class PostingController {
 
     private final PostingService postingService;
 
-    /*@PostMapping("/posting")
-    public Posting savePosting(@RequestParam("name") String name){
-        return postingService.savePosting(name);
-    }*/
     @PostMapping("/posting")
     public ApiResponse<Posting> savePosting(@RequestBody @Valid PostingRequest postingRequest, BindingResult errors) {
         if (errors.hasErrors())
-            return new ApiResponse<Posting>(false, null, null);
+            return new ApiResponse<Posting>(false, HttpStatus.BAD_REQUEST, null, null);
         Posting posting = Converter.postingFromPostingRequest(postingRequest);
         List<Photo> photoList = Converter.photoListFromPhotoRequestList(postingRequest.getPhotoRequestList());
         List<Video> videoList = Converter.videoListFromVideoRequestList(postingRequest.getVideoRequestList());
         postingService.save(posting, videoList, photoList);
-        return new ApiResponse(true, posting, null);
+        return new ApiResponse(true,HttpStatus.OK, posting, null);
     }
+
+
 
 }
