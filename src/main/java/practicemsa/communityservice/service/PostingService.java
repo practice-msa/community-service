@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import practicemsa.communityservice.domain.Photo;
 import practicemsa.communityservice.domain.Posting;
 import practicemsa.communityservice.domain.Video;
+import practicemsa.communityservice.dto.request.PostingRequest;
+import practicemsa.communityservice.dto.util.Converter;
 import practicemsa.communityservice.repository.PostingRepository;
 
 import java.util.List;
@@ -25,13 +27,23 @@ public class PostingService {
         return postingRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Posting save(Posting posting, List<Video> videoList, List<Photo> photoList) {
+
+        Posting savePosting = postingRepository.save(posting);
         posting.setVideoList(videoList);
         posting.setPhotoList(photoList);
-        Posting savePosting = postingRepository.save(posting);
-        photoList.forEach(photo -> photoService.save(posting, photo));
-        videoList.forEach(video -> videoService.save(posting, video));
         return savePosting;
+    }
+
+    @Transactional
+    public Posting save(PostingRequest postingRequest) {
+
+        Posting posting = Converter.postingFromPostingRequest(postingRequest);
+        List<Photo> photoList = Converter.photoListFromPhotoRequestList(postingRequest.getPhotoRequestList());
+        List<Video> videoList = Converter.videoListFromVideoRequestList(postingRequest.getVideoRequestList());
+        Posting savePosting = save(posting, videoList, photoList);
+        return savePosting;
+
     }
 }

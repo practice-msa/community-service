@@ -22,17 +22,14 @@ public class PostingController {
 
     private final PostingService postingService;
 
+
     @PostMapping("/posting")
     public ApiResponse<Posting> savePosting(@RequestBody @Valid PostingRequest postingRequest, BindingResult errors) {
         if (errors.hasErrors())
             return new ApiResponse<Posting>(false, HttpStatus.BAD_REQUEST, null, null);
-        Posting posting = Converter.postingFromPostingRequest(postingRequest);
-        List<Photo> photoList = Converter.photoListFromPhotoRequestList(postingRequest.getPhotoRequestList());
-        List<Video> videoList = Converter.videoListFromVideoRequestList(postingRequest.getVideoRequestList());
-        postingService.save(posting, videoList, photoList);
-        return new ApiResponse(true,HttpStatus.OK, posting, null);
+        Posting posting = postingService.save(postingRequest);
+        return new ApiResponse<>(true,HttpStatus.OK, posting, null);
     }
-
 
 
 }
