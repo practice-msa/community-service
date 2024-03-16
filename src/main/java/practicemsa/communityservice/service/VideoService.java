@@ -53,4 +53,12 @@ public class VideoService {
         videoRepository.deleteByUrl(url);
         return s3Service.deleteFile(s3object);
     }
+
+    public void findAndSetPosting(Video video, Posting posting) {
+        Optional<Video> findVideo = videoRepository.findByUrl(video.getUrl());
+        if (findVideo.isPresent()){
+            video=findVideo.get();
+            findVideo.get().setPosting(posting);
+        }
+    }
 }

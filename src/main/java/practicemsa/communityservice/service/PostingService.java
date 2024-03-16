@@ -30,9 +30,13 @@ public class PostingService {
     @Transactional
     public Posting save(Posting posting, List<Video> videoList, List<Photo> photoList) {
 
+        photoList.forEach(photo -> photoService.findAndSetPosting(photo,posting));
+        videoList.forEach(video -> videoService.findAndSetPosting(video,posting));
+
         Posting savePosting = postingRepository.save(posting);
         posting.setVideoList(videoList);
         posting.setPhotoList(photoList);
+
         return savePosting;
     }
 

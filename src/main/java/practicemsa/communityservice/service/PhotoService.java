@@ -54,4 +54,12 @@ public class PhotoService {
         photoRepository.deleteByUrl(url);
         return s3Service.deleteFile(s3object);
     }
+
+    @Transactional
+    public void findAndSetPosting(Photo photo,Posting posting){
+        Optional<Photo> findPhoto = photoRepository.findByUrl(photo.getUrl());
+        if (findPhoto.isPresent()){
+            findPhoto.get().setPosting(posting);
+        }
+    }
 }

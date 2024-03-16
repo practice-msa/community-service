@@ -18,18 +18,29 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/posting")
 public class PostingController {
 
     private final PostingService postingService;
 
 
-    @PostMapping("/posting")
+    @PostMapping
     public ApiResponse<Posting> savePosting(@RequestBody @Valid PostingRequest postingRequest, BindingResult errors) {
         if (errors.hasErrors())
             return new ApiResponse<Posting>(false, HttpStatus.BAD_REQUEST, null, null);
         Posting posting = postingService.save(postingRequest);
         return new ApiResponse<>(true,HttpStatus.OK, posting, null);
     }
+
+    @GetMapping("{id}")
+    public ApiResponse<Posting>findById(@PathVariable("id")Long id){
+        Posting posting = postingService.findOneById(id);
+
+        return new ApiResponse<>(true,HttpStatus.OK,posting,null);
+
+    }
+
+
 
 
 }
