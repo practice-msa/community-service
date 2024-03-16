@@ -47,4 +47,11 @@ public class PhotoService {
             throw new RuntimeException(e);
         }
     }
+
+    @Transactional
+    public String delete(String s3object){
+        String url = "https://s3-practice12.s3.ap-northeast-2.amazonaws.com/"+s3object;
+        photoRepository.deleteByUrl(url);
+        return s3Service.deleteFile(s3object);
+    }
 }

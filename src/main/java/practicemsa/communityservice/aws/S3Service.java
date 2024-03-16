@@ -28,4 +28,22 @@ public class S3Service {
         amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
         return fileUrl;
     }
+
+    public String deleteFile(String url) {
+        String result = "success";
+
+        try {
+            boolean isObjectExist = amazonS3Client.doesObjectExist(bucket, url);
+            if (isObjectExist) {
+                amazonS3Client.deleteObject(bucket, url);
+            } else {
+                result = "file not found";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
 }

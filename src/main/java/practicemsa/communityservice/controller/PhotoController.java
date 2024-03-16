@@ -26,4 +26,10 @@ public class PhotoController {
         return new ApiResponse<>(true, HttpStatus.OK,photo,null);
     }
 
+    @DeleteMapping("/delete")
+    public ApiResponse<String>delete(@RequestParam("url")String url){
+        String result = photoService.delete(url);
+        return new ApiResponse<>(true,HttpStatus.OK,result,null);
+    }
+
 }
