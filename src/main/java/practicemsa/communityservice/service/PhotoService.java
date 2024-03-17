@@ -27,13 +27,13 @@ public class PhotoService {
     }
 
     @Transactional
-    public Optional<Photo> saveIfNotHave(String url){
+    public Photo saveIfNotHave(String url){
         Optional<Photo> photoOptional = photoRepository.findByUrl(url);
         if(photoOptional.isEmpty()){
             Photo photo=new Photo(url);
-            return Optional.ofNullable(save(photo));
+            return save(photo);
         }
-        return photoOptional;
+        return photoOptional.get();
     }
 
     @Transactional

@@ -26,13 +26,13 @@ public class VideoService {
     }
 
     @Transactional
-    public Optional<Video> saveIfNotHave(String url){
+    public Video saveIfNotHave(String url){
         Optional<Video> videoOptional = videoRepository.findByUrl(url);
         if(videoOptional.isEmpty()){
             Video video=new Video(url);
-            return Optional.ofNullable(save(video));
+            return save(video);
         }
-        return videoOptional;
+        return videoOptional.get();
     }
 
     @Transactional
@@ -40,8 +40,8 @@ public class VideoService {
         String url = null;
         try {
             url = s3Service.uploadDate(file);
-            Optional<Video> videoOptional = saveIfNotHave(url);
-            return videoOptional.get();
+            Video video = saveIfNotHave(url);
+            return video;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
