@@ -41,8 +41,8 @@ public class PhotoService {
         String url = null;
         try {
             url = s3Service.uploadDate(file);
-            Optional<Photo> photoOptional = saveIfNotHave(url);
-            return photoOptional.get();
+            Photo photo = saveIfNotHave(url);
+            return photo;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
